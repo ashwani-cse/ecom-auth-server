@@ -1,8 +1,8 @@
 CREATE TABLE `role`
 (
     id               BIGINT AUTO_INCREMENT NOT NULL,
-    create_timestamp VARCHAR(255) NULL,
-    update_timestamp VARCHAR(255) NULL,
+    create_timestamp TIMESTAMP NULL,
+    update_timestamp TIMESTAMP NULL,
     is_deleted       BIT(1) NULL,
     name             VARCHAR(255) NULL,
     CONSTRAINT pk_role PRIMARY KEY (id)
@@ -11,8 +11,8 @@ CREATE TABLE `role`
 CREATE TABLE token
 (
     id               BIGINT AUTO_INCREMENT NOT NULL,
-    create_timestamp VARCHAR(255) NULL,
-    update_timestamp VARCHAR(255) NULL,
+    create_timestamp TIMESTAMP NULL,
+    update_timestamp TIMESTAMP NULL,
     is_deleted       BIT(1) NULL,
     value            VARCHAR(255) NULL,
     user_id          BIGINT NULL,
@@ -23,8 +23,8 @@ CREATE TABLE token
 CREATE TABLE user_detail
 (
     id                BIGINT AUTO_INCREMENT NOT NULL,
-    create_timestamp  VARCHAR(255) NULL,
-    update_timestamp  VARCHAR(255) NULL,
+    create_timestamp  TIMESTAMP NULL,
+    update_timestamp  TIMESTAMP NULL,
     is_deleted        BIT(1) NULL,
     first_name        VARCHAR(255) NULL,
     last_name         VARCHAR(255) NULL,

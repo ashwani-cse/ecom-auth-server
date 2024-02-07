@@ -1,6 +1,8 @@
 package com.management.user.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,7 +10,9 @@ import java.util.List;
 
 @Setter
 @Getter
+@Builder
 @Entity(name = "user_detail")
+@AllArgsConstructor
 public class UserDetail extends Base {
 
     @Column(name = "first_name")
@@ -38,4 +42,7 @@ public class UserDetail extends Base {
     @Column(name = "is_phone_verified")
     private boolean isPhoneVerified;
 
+    public UserDetail() {
+
+    }
 }

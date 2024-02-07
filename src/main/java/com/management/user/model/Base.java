@@ -8,6 +8,8 @@ import lombok.ToString;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.time.Instant;
+
 @ToString
 @Getter
 @Setter
@@ -23,11 +25,11 @@ public class Base {
 
     @JsonIgnore
     @Column(name = "CREATE_TIMESTAMP")
-    private String createTimeStamp;
+    private Instant createTimeStamp;
 
     @JsonIgnore
     @Column(name = "UPDATE_TIMESTAMP")
-    private String updateTimeStamp;
+    private Instant updateTimeStamp;
 
     @JsonIgnore
     @Column(name = "IS_DELETED")
