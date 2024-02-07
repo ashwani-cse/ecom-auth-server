@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -20,6 +21,12 @@ public class ApiValidationExceptionHandler {
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<ErrorPayload> handleNoResourceFoundException(NoResourceFoundException exception) {
         log.error("handleNoResourceFoundException: {}", exception.getMessage());
+        return ErrorResponse.handlerException(HttpStatus.BAD_REQUEST.value(), exception.getMessage());
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<ErrorPayload> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException exception) {
+        log.error("handleHttpRequestMethodNotSupportedException: {}", exception.getMessage());
         return ErrorResponse.handlerException(HttpStatus.BAD_REQUEST.value(), exception.getMessage());
     }
 
