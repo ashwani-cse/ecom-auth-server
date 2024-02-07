@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: user-management-service
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        generate_statistics: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/user_management_service
+    username: user_management_service_admin
+    password: user_management_service_admin
