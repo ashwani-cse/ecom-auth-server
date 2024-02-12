@@ -10,6 +10,10 @@ import org.hibernate.type.SqlTypes;
 
 import java.time.Instant;
 
+/**
+ * @author Ashwani Kumar
+ * Created on 11/02/24.
+ */
 @ToString
 @Getter
 @Setter

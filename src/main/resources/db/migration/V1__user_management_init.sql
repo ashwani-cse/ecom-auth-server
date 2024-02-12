@@ -46,7 +46,7 @@ ALTER TABLE token
     ADD CONSTRAINT FK_TOKEN_ON_USER FOREIGN KEY (user_id) REFERENCES user_detail (id);
 
 ALTER TABLE user_role_mapping
-    ADD CONSTRAINT fk_user_role_mapping_on_role FOREIGN KEY (role_id) REFERENCES `role` (id);
+        ADD CONSTRAINT fk_user_role_mapping_on_role FOREIGN KEY (role_id) REFERENCES `role` (id);
 
 ALTER TABLE user_role_mapping
     ADD CONSTRAINT fk_user_role_mapping_on_user_detail FOREIGN KEY (user_id) REFERENCES user_detail (id);

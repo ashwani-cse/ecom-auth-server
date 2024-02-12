@@ -1,13 +1,16 @@
 package com.management.user.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
+/**
+ * @author Ashwani Kumar
+ * Created on 11/02/24.
+ */
+@ToString
 @Setter
 @Getter
 @Builder
@@ -24,6 +27,7 @@ public class UserDetail extends Base {
     @Column(name = "email")
     private String email;
 
+    @JsonIgnore
     @Column(name = "password")
     private String password;
 
@@ -34,6 +38,7 @@ public class UserDetail extends Base {
     @JoinTable(name = "user_role_mapping",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @ToString.Exclude
     private List<Role> roles;
 
     @Column(name = "is_email_verified")

@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * @author Ashwani Kumar
+ * Created on 11/02/24.
+ */
 @Slf4j
 @RequestMapping("/roles")
 @RestController
@@ -19,7 +23,7 @@ public class RoleController {
 
     private final RoleService roleService;
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<List<String>> addRoles(@RequestBody List<String> roles) {
         List<Role> createdRoles = roleService.createRoles(roles);
         if (createdRoles.isEmpty()) {
@@ -28,7 +32,7 @@ public class RoleController {
         return ResponseEntity.status(HttpStatus.CREATED).body(mapRolesToString(createdRoles));
     }
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<String>> getAllRoles() {
         List<Role> roles = roleService.getRoles();
         if (roles.isEmpty()) {

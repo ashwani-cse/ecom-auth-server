@@ -10,6 +10,10 @@ import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author Ashwani Kumar
+ * Created on 11/02/24.
+ */
 @Service
 @RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
@@ -18,6 +22,8 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<Role> createRoles(List<String> roleNames) {
+        List<Role> existingRoles = rolesRepository.findAll();
+        roleNames = roleNames.stream().filter(newRole -> existingRoles.stream().noneMatch(roleObj -> roleObj.getName().equalsIgnoreCase(newRole))).toList();
         List<Role> roles = buildRoles(roleNames);
         return rolesRepository.saveAll(roles);
     }

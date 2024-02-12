@@ -13,3 +13,7 @@ spring:
     url: jdbc:mysql://localhost:3306/user_management_service
     username: user_management_service_admin
     password: user_management_service_admin
+
+token:
+    expiry:
+      days: 1

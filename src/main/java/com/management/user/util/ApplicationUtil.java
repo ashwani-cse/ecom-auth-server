@@ -2,6 +2,10 @@ package com.management.user.util;
 
 import java.util.Collection;
 
+/**
+ * @author Ashwani Kumar
+ * Created on 11/02/24.
+ */
 public final class ApplicationUtil {
 
     public static boolean isEmpty(Collection<?> collection) {

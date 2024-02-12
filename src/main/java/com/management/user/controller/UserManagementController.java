@@ -1,8 +1,10 @@
 package com.management.user.controller;
 
+import com.management.user.dto.LogOutDto;
 import com.management.user.dto.SignInDto;
-import com.management.user.model.UserDetail;
 import com.management.user.dto.SignUpDto;
+import com.management.user.model.Token;
+import com.management.user.model.UserDetail;
 import com.management.user.service.UserManagementService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -11,6 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * @author Ashwani Kumar
+ * Created on 11/02/24.
+ */
 @Slf4j
 @RequestMapping("/users")
 @RestController
@@ -22,7 +28,7 @@ public class UserManagementController {
         this.userManagementService = userManagementService;
     }
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<UserDetail>> getAllUsers(){
         List<UserDetail> users = userManagementService.getAllUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
@@ -35,17 +41,23 @@ public class UserManagementController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<UserDetail> signIn(@RequestBody SignInDto signInDto) {
-        UserDetail userDetail = userManagementService.loginUser(signInDto);
-        return new ResponseEntity<>(userDetail, HttpStatus.CREATED);
+    public ResponseEntity<Token> signIn(@RequestBody SignInDto signInDto) {
+        Token token = userManagementService.loginUser(signInDto.email(), signInDto.password());
+        return new ResponseEntity<>(token, HttpStatus.CREATED);
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<Void> logOut() {
-        if (userManagementService.logoutUser()) {
+    public ResponseEntity<Void> logOut(@RequestBody LogOutDto logOutDto) {
+        if (userManagementService.logoutUser(logOutDto.token())) {
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+
+    @GetMapping("/validate/{token}")
+    public ResponseEntity<UserDetail> validateToken(@PathVariable("token") String token) {
+        UserDetail userDetail = userManagementService.validateToken(token);
+        return new ResponseEntity<>(userDetail, HttpStatus.OK);
     }
 }

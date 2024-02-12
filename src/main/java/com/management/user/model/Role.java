@@ -4,8 +4,10 @@ import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.Instant;
-
+/**
+ * @author Ashwani Kumar
+ * Created on 11/02/24.
+ */
 @Setter
 @Getter
 @Entity(name = "role")

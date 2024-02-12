@@ -5,6 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+/**
+ * @author Ashwani Kumar
+ * Created on 11/02/24.
+ */
 @Slf4j
 public final class ErrorResponse {
 
