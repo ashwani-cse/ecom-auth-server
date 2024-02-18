@@ -55,6 +55,10 @@ public class UserManagementController {
         }
     }
 
+    /*
+    *  This endpoint will validate the token and return the user details.
+    *  If the token is not valid then it will return 404. Any client can use this endpoint to validate the token.
+    * */
     @GetMapping("/validate/{token}")
     public ResponseEntity<UserDetail> validateToken(@PathVariable("token") String token) {
         UserDetail userDetail = userManagementService.validateToken(token);

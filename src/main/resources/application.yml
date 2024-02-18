@@ -17,3 +17,9 @@ spring:
 token:
     expiry:
       days: 1
+
+logging:
+  level:
+    org:
+      springframework:
+        security: TRACE

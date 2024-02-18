@@ -1,4 +1,4 @@
-package com.management.user.config;
+package com.management.user.security.basic;
 
 import com.management.user.model.Token;
 import com.management.user.model.UserDetail;
@@ -16,7 +16,7 @@ import java.util.Date;
  * Created on 12/02/24.
  */
 
-@Component
+@Component // disable this to test oauth2 configuration
 public class TokenGenerator {
 
     @Value("${token.expiry.days}")

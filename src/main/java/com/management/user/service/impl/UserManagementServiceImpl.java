@@ -1,6 +1,6 @@
 package com.management.user.service.impl;
 
-import com.management.user.config.TokenGenerator;
+import com.management.user.security.basic.TokenGenerator;
 import com.management.user.dto.SignUpDto;
 import com.management.user.exception.CustomException;
 import com.management.user.exception.ObjectNotFoundException;
@@ -14,7 +14,7 @@ import com.management.user.service.UserManagementService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -34,7 +34,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     private final UserRepository userRepository;
     private final RolesRepository rolesRepository;
     private final TokenRepository tokenRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final PasswordEncoder bCryptPasswordEncoder;
     private final TokenGenerator tokenGenerator;
 
     @Override

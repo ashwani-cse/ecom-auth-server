@@ -1,7 +1,6 @@
-package com.management.user.config;
+package com.management.user.security.basic;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -9,7 +8,7 @@ import org.springframework.security.web.SecurityFilterChain;
  * @author Ashwani Kumar
  * Created on 11/02/24.
  */
-@Configuration
+//@Configuration    // disable this to test oauth2 configuration
 public class SecurityConfiguration {
 
     @Bean
