@@ -30,7 +30,7 @@ public class JpaRegisteredClientRepositoryTest {
     void testSave() {
         RegisteredClient oidcClient = RegisteredClient.withId(UUID.randomUUID().toString())
                 .clientId("oidc-client")
-                .clientSecret("{noop}secret") // use bcrypt encoder before saving secret into db else during generate token it will throw error.
+                .clientSecret("secret") // use bcrypt encoder before saving secret into db else during generate token it will throw error.
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)

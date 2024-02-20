@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.management.user.security.authserver.model.Client;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.jackson2.SecurityJackson2Modules;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
@@ -28,11 +29,13 @@ import java.util.Set;
 @Component
 public class JpaRegisteredClientRepository implements RegisteredClientRepository {
 	private final ClientRepository clientRepository;
+	private final PasswordEncoder bCryptPasswordEncoder;
 	private final ObjectMapper objectMapper = new ObjectMapper();
 
-	public JpaRegisteredClientRepository(ClientRepository clientRepository) {
-		Assert.notNull(clientRepository, "clientRepository cannot be null");
+	public JpaRegisteredClientRepository(ClientRepository clientRepository, PasswordEncoder bCryptPasswordEncoder) {
+        Assert.notNull(clientRepository, "clientRepository cannot be null");
 		this.clientRepository = clientRepository;
+		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 
 		ClassLoader classLoader = JpaRegisteredClientRepository.class.getClassLoader();
 		List<Module> securityModules = SecurityJackson2Modules.getModules(classLoader);
@@ -108,7 +111,8 @@ public class JpaRegisteredClientRepository implements RegisteredClientRepository
 		entity.setId(registeredClient.getId());
 		entity.setClientId(registeredClient.getClientId());
 		entity.setClientIdIssuedAt(registeredClient.getClientIdIssuedAt());
-		entity.setClientSecret(registeredClient.getClientSecret());
+		String encodedClientSecret = bCryptPasswordEncoder.encode(registeredClient.getClientSecret());// use bcrypt encoder before saving secret into db else during generate token it will throw error.
+		entity.setClientSecret(encodedClientSecret);
 		entity.setClientSecretExpiresAt(registeredClient.getClientSecretExpiresAt());
 		entity.setClientName(registeredClient.getClientName());
 		entity.setClientAuthenticationMethods(StringUtils.collectionToCommaDelimitedString(clientAuthenticationMethods));

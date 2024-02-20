@@ -13,6 +13,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
@@ -208,6 +209,8 @@ public class SecurityConfig {
 								.map(c -> c.replaceFirst("^ROLE_", ""))
 								.collect(Collectors.collectingAndThen(Collectors.toSet(), Collections::unmodifiableSet));
 						claims.put("roles", roles);
+						Authentication principal = context.getPrincipal();
+						claims.put("user_id", context.getPrincipal().getName());
 						//claims.put("claim-2", "value-2"); // ewe can hard-code authorities also
 					});
 				}
