@@ -1,15 +1,15 @@
 package com.management.user.service.impl;
 
-import com.management.user.security.basic.TokenGenerator;
 import com.management.user.dto.SignUpDto;
 import com.management.user.exception.CustomException;
 import com.management.user.exception.ObjectNotFoundException;
 import com.management.user.model.Role;
 import com.management.user.model.Token;
 import com.management.user.model.UserDetail;
-import com.management.user.repository.RolesRepository;
 import com.management.user.repository.TokenRepository;
 import com.management.user.repository.UserRepository;
+import com.management.user.security.basic.TokenGenerator;
+import com.management.user.service.RoleService;
 import com.management.user.service.UserManagementService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +32,7 @@ import java.util.Optional;
 public class UserManagementServiceImpl implements UserManagementService {
 
     private final UserRepository userRepository;
-    private final RolesRepository rolesRepository;
+    private final RoleService roleService;
     private final TokenRepository tokenRepository;
     private final PasswordEncoder bCryptPasswordEncoder;
     private final TokenGenerator tokenGenerator;
@@ -44,15 +44,13 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     @Override
     public UserDetail registerUser(SignUpDto signUpDto) {
-        Role userRole = rolesRepository.getRoleByNameEqualsAndIsDeleted("USER", false);
+        Role userRole = roleService.getDefaultRole();
         UserDetail userDetail = buildUserDetail(signUpDto, Collections.singletonList(userRole));
-        UserDetail savedUser;
         try {
-            savedUser = userRepository.save(userDetail);
+            return userRepository.save(userDetail);
         } catch (Exception e) {
             throw new CustomException("Saving user in DB fails.");
         }
-        return savedUser;
     }
 
     @Override
@@ -103,4 +101,5 @@ public class UserManagementServiceImpl implements UserManagementService {
                 .roles(roles)
                 .build();
     }
+
 }

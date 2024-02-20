@@ -34,11 +34,11 @@ public class UserDetail extends Base {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER) // need to spring security to load the roles eagerly, else  an error will be thrown
     @JoinTable(name = "user_role_mapping",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    @ToString.Exclude
+   // @ToString.Exclude
     private List<Role> roles;
 
     @Column(name = "is_email_verified")

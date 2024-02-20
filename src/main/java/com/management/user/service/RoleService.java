@@ -10,6 +10,14 @@ import java.util.List;
  */
 public interface RoleService {
 
+    Role createRole(String role);
+
     List<Role> createRoles(List<String> roles);
     List<Role> getRoles();
+
+    Role getDefaultRole();
+
+    Role getRoleByName(String name);
+
+    Role getRoleByNameAndIsDeleted(String name, boolean isDeleted);
 }
