@@ -3,6 +3,7 @@ package com.management.user.security.authserver.service;
 import com.management.user.model.Role;
 import com.management.user.model.UserDetail;
 import com.management.user.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,6 +21,7 @@ import java.util.Optional;
  * Created on 19/02/24.
  */
 
+@Slf4j
 @Component
 public class CustomUserDetailsService implements UserDetailsService {
 
@@ -37,6 +39,7 @@ public class CustomUserDetailsService implements UserDetailsService {
      */
     @Override
     public org.springframework.security.core.userdetails.UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        log.info("loadUserByUsername starts; username: {}", username);
         Optional<UserDetail> userDetailOptional = userRepository.findUserDetailByEmail(username);// we have email as username
         if(userDetailOptional.isEmpty()){
             throw new UsernameNotFoundException("Username not found");
@@ -57,11 +60,13 @@ public class CustomUserDetailsService implements UserDetailsService {
      * @return
      */
     private List<GrantedAuthority> getAuthorities(UserDetail userDetail) {
+        log.info("getAuthorities starts; userDetail: {}", userDetail.getEmail());
         // we can get the authorities from the userDetail object and return it
         List<GrantedAuthority> authorities = new ArrayList<>();
         for(Role role: userDetail.getRoles()){
             authorities.add(new SimpleGrantedAuthority(role.getName()));
         }
+        log.info("getAuthorities ends; authorities: {}", authorities);
         return authorities;
     }
 }

@@ -25,6 +25,7 @@ public class RoleController {
 
     @PostMapping("/")
     public ResponseEntity<List<String>> addRoles(@RequestBody List<String> roles) {
+        log.info("Adding roles: {}", roles);
         List<Role> createdRoles = roleService.createRoles(roles);
         if (createdRoles.isEmpty()) {
             return ResponseEntity.internalServerError().build();
@@ -34,6 +35,7 @@ public class RoleController {
 
     @GetMapping("/")
     public ResponseEntity<List<String>> getAllRoles() {
+        log.info("Getting all roles");
         List<Role> roles = roleService.getRoles();
         if (roles.isEmpty()) {
             return ResponseEntity.noContent().build();

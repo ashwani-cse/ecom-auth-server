@@ -34,7 +34,7 @@ public class UserManagementController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @PostMapping("/signup")
+        @PostMapping("/signup")
     public ResponseEntity<UserDetail> signUp(@RequestBody SignUpDto signUpDto) {
         UserDetail userDetail = userManagementService.registerUser(signUpDto);
         return new ResponseEntity<>(userDetail, HttpStatus.CREATED);

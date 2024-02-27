@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.management.user.security.authserver.model.Client;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.jackson2.SecurityJackson2Modules;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -26,13 +27,18 @@ import java.util.Set;
  * @author Ashwani Kumar
  * Created on 18/02/24.
  */
+@Slf4j
 @Component
 public class JpaRegisteredClientRepository implements RegisteredClientRepository {
 	private final ClientRepository clientRepository;
 	private final PasswordEncoder bCryptPasswordEncoder;
 	private final ObjectMapper objectMapper = new ObjectMapper();
 
+	/**
+	 * Constructs a {@code JpaRegisteredClientRepository} using the provided parameters.
+	 */
 	public JpaRegisteredClientRepository(ClientRepository clientRepository, PasswordEncoder bCryptPasswordEncoder) {
+		log.info("JpaRegisteredClientRepository starts");
         Assert.notNull(clientRepository, "clientRepository cannot be null");
 		this.clientRepository = clientRepository;
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
@@ -41,24 +47,34 @@ public class JpaRegisteredClientRepository implements RegisteredClientRepository
 		List<Module> securityModules = SecurityJackson2Modules.getModules(classLoader);
 		this.objectMapper.registerModules(securityModules);
 		this.objectMapper.registerModule(new OAuth2AuthorizationServerJackson2Module());
+		log.info("JpaRegisteredClientRepository ends");
 	}
 
 	@Override
 	public void save(RegisteredClient registeredClient) {
+		log.info("RegisteredClient save starts; registeredClient: {}", registeredClient.getClientName());
 		Assert.notNull(registeredClient, "registeredClient cannot be null");
-		this.clientRepository.save(toEntity(registeredClient));
+		Client entity = toEntity(registeredClient);
+		this.clientRepository.save(entity);
+		log.info("RegisteredClient save ends");
 	}
 
 	@Override
 	public RegisteredClient findById(String id) {
+		log.info("RegisteredClient findById starts; id: {}", id);
 		Assert.hasText(id, "id cannot be empty");
-		return this.clientRepository.findById(id).map(this::toObject).orElse(null);
+		RegisteredClient registeredClient = this.clientRepository.findById(id).map(this::toObject).orElse(null);
+		log.info("RegisteredClient findById ends");
+		return registeredClient;
 	}
 
 	@Override
 	public RegisteredClient findByClientId(String clientId) {
+		log.info("RegisteredClient findByClientId starts; clientId: {}", clientId);
 		Assert.hasText(clientId, "clientId cannot be empty");
-		return this.clientRepository.findByClientId(clientId).map(this::toObject).orElse(null);
+		RegisteredClient registeredClient = this.clientRepository.findByClientId(clientId).map(this::toObject).orElse(null);
+		log.info("RegisteredClient findByClientId ends");
+		return registeredClient;
 	}
 
 	private RegisteredClient toObject(Client client) {
@@ -144,6 +160,7 @@ public class JpaRegisteredClientRepository implements RegisteredClientRepository
 	}
 
 	private static AuthorizationGrantType resolveAuthorizationGrantType(String authorizationGrantType) {
+		log.info("AuthorizationGrantType resolveAuthorizationGrantType starts; authorizationGrantType: {}", authorizationGrantType);
 		if (AuthorizationGrantType.AUTHORIZATION_CODE.getValue().equals(authorizationGrantType)) {
 			return AuthorizationGrantType.AUTHORIZATION_CODE;
 		} else if (AuthorizationGrantType.CLIENT_CREDENTIALS.getValue().equals(authorizationGrantType)) {
@@ -155,6 +172,7 @@ public class JpaRegisteredClientRepository implements RegisteredClientRepository
 	}
 
 	private static ClientAuthenticationMethod resolveClientAuthenticationMethod(String clientAuthenticationMethod) {
+		log.info("ClientAuthenticationMethod resolveClientAuthenticationMethod starts; clientAuthenticationMethod: {}", clientAuthenticationMethod);
 		if (ClientAuthenticationMethod.CLIENT_SECRET_BASIC.getValue().equals(clientAuthenticationMethod)) {
 			return ClientAuthenticationMethod.CLIENT_SECRET_BASIC;
 		} else if (ClientAuthenticationMethod.CLIENT_SECRET_POST.getValue().equals(clientAuthenticationMethod)) {

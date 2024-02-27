@@ -17,6 +17,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -92,14 +93,17 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     private UserDetail buildUserDetail(SignUpDto signUpDto, List<Role> roles) {
-        return UserDetail.builder()
-                .email(signUpDto.email())
-                .phoneNumber(signUpDto.phoneNumber())
-                .firstName(signUpDto.firstName())
-                .lastName(signUpDto.lastName())
-                .password(bCryptPasswordEncoder.encode(signUpDto.password()))
-                .roles(roles)
-                .build();
+        Instant instant = Instant.now();
+        UserDetail userDetail = new UserDetail();
+        userDetail.setEmail(signUpDto.email());
+        userDetail.setPhoneNumber(signUpDto.phoneNumber());
+        userDetail.setFirstName(signUpDto.firstName());
+        userDetail.setLastName(signUpDto.lastName());
+        userDetail.setPassword(bCryptPasswordEncoder.encode(signUpDto.password()));
+        userDetail.setRoles(roles);
+        userDetail.setCreateTimeStamp(instant);
+        userDetail.setUpdateTimeStamp(instant);
+        return userDetail;
     }
 
 }

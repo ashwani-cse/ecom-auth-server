@@ -15,8 +15,10 @@ import java.util.Date;
  * @author Ashwani Kumar
  * Created on 12/02/24.
  */
-
-@Component // disable this to test oauth2 configuration
+/*
+*  This is used for custom (non-oauth2) token generator POC.
+* */
+@Component
 public class TokenGenerator {
 
     @Value("${token.expiry.days}")
