@@ -1,6 +1,6 @@
-# user-management-service
+# ecom-auth-server
 
-This repository contains a Spring Boot project named **user-management-service**. The project is built using Maven and includes controllers, a repository, a service, and exception handling.
+This repository contains a Spring Boot project named **ecom-auth-server**. The project is built using Maven and includes controllers, a repository, a service, and exception handling.
 
 ## Table of Contents
 - [Overview](#overview)
@@ -27,7 +27,7 @@ The project consists of a Spring Boot application with the following components:
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/ashwani-cse/user-management-service.git
+    git clone https://github.com/ashwani-cse/ecom-auth-server.git
     ```
 
 2. Build the project:
