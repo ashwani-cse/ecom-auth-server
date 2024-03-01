@@ -151,8 +151,7 @@ public class SecurityConfig {
 		log.info("DefaultSecurityFilterChain is start.");
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/users/signup").permitAll()
-                        .requestMatchers("/oauth2/token/validate").permitAll()
+                        .requestMatchers("/api/v1/users/signup").permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable) // // disable CSRF because POST method will not work for permitAll
@@ -231,7 +230,7 @@ public class SecurityConfig {
                             .collect(Collectors.collectingAndThen(Collectors.toSet(), Collections::unmodifiableSet));
                     claims.put("roles", roles);
                     Authentication principal = context.getPrincipal();
-                    claims.put("user_id", context.getPrincipal().getName());
+                    //claims.put("user_id", context.getPrincipal().getName());
                     //claims.put("claim-2", "value-2"); // ewe can hard-code authorities also
                 });
             }

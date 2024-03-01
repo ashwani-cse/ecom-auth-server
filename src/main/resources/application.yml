@@ -28,6 +28,9 @@ logging:
     org:
       springframework:
         security: trace
+    root: info
+  pattern:
+    level: "%5p [user-management-service] %d{HH:mm:ss.SSS} [%t] %c.class{%L} - %m%n"
 
 eureka:
     client:

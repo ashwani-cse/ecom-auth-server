@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.management.user.Constants.ApiSecurity.PATH;
+
 /**
  * @author Ashwani Kumar
  * Created on 11/02/24.
  */
 @Slf4j
-@RequestMapping("/roles")
+@RequestMapping(PATH + "/roles")
 @RestController
 @RequiredArgsConstructor
 public class RoleController {
